@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Happy 27th Birthday, Nadhifah!</title>
     <style>
         * {
@@ -10,112 +10,155 @@
             margin: 0;
             padding: 0;
         }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #ffe5ec 0%, #ffc2d1 100%);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: #4a5568;
-            overflow-x: hidden;
-            padding: 20px;
-        }
-        .container {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(10px);
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(255, 75, 110, 0.15);
-            text-align: center;
-            max-width: 450px;
+        body, html {
             width: 100%;
-            border: 2px solid #fff;
-            z-index: 10;
-        }
-        h1 {
-            font-size: 1.6rem;
-            color: #ff4b6e;
-            margin-bottom: 5px;
-            font-weight: 700;
-        }
-        .subtitle {
-            font-size: 0.9rem;
-            color: #718096;
-            margin-bottom: 20px;
-            font-style: italic;
-        }
-        .image-wrapper {
-            width: 100%;
-            border-radius: 15px;
+            height: 100vh;
             overflow: hidden;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-            margin-bottom: 25px;
-            background: #eee;
-            aspect-ratio: 1 / 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #000;
         }
-        .image-wrapper img {
+        /* Gambar Fullscreen Khusus Layar HP */
+        .fullscreen-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
+            z-index: 1;
         }
-        .music-card {
-            background: #fff;
-            padding: 15px;
-            border-radius: 12px;
+        /* Efek Gelap Transparan di Atas Gambar Agar Tulisan Terbaca */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.6) 100%);
+            z-index: 2;
+        }
+        /* Konten Utama */
+        .content-container {
+            position: relative;
+            z-index: 10;
+            height: 100vh;
             display: flex;
             flex-direction: column;
+            justify-content: space-between;
             align-items: center;
-            gap: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            padding: 40px 25px;
+            text-align: center;
+            color: #fff;
+        }
+        .header-text h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+        .header-text p {
+            font-size: 0.95rem;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+            font-style: italic;
+            opacity: 0.9;
+        }
+        /* Kartu Musik di Bagian Bawah */
+        .music-card {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 20px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 340px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
         }
         .btn-play {
             background: #ff4b6e;
             color: white;
             border: none;
-            padding: 12px 30px;
+            padding: 14px 35px;
             font-size: 1rem;
             font-weight: bold;
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(255, 75, 110, 0.4);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .btn-play:hover {
-            background: #ff2a54;
-            transform: translateY(-2px);
-        }
-        .btn-play:active {
-            transform: translateY(0);
+            width: 100%;
+            letter-spacing: 1px;
         }
         .status-text {
-            font-size: 0.85rem;
-            color: #a0aec0;
+            font-size: 0.8rem;
+            color: #f7fafc;
+            margin-top: 10px;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+        }
+        /* Animasi Balon Melayang */
+        .balloon {
+            position: absolute;
+            bottom: -150px;
+            width: 40px;
+            height: 50px;
+            background: rgba(255, 182, 193, 0.7);
+            border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+            z-index: 5;
+            animation: floatUp 8s infinite linear;
+        }
+        .balloon:before {
+            content: "";
+            position: absolute;
+            bottom: -8px;
+            left: 17px;
+            width: 0;
+            height: 0;
+            border-left: 3px solid transparent;
+            border-right: 3px solid transparent;
+            border-bottom: 8px solid rgba(255, 182, 193, 0.7);
+        }
+        /* Animasi Sparkle / Kerlip Bintang */
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            z-index: 4;
+            box-shadow: 0 0 10px 2px #fff, 0 0 20px 4px #ffb6c1;
+            animation: blink 3s infinite ease-in-out;
+            opacity: 0;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(-110vh) rotate(10deg); opacity: 0; }
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1.2); }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>Happy 27th Birthday, Nadhifah Rizky</h1>
-        <div class="subtitle">Buka albumnya sambil dengerin ini yaa...</div>
+    <!-- Gambar Penuh Layar Belakang -->
+    <img class="fullscreen-bg" src="foto ayang buat desain web.png" alt="Desain Spesial Nadhifah">
+    <div class="overlay"></div>
 
-        <!-- Bagian Gambar Desain -->
-        <div class="image-wrapper">
-            <!-- Nama file gambar disesuaikan dengan screenshot kamu -->
-            <img src="foto ayang buat desain web.png" alt="Desain Spesial Nadhifah">
+    <!-- Kontainer Efek Melayang -->
+    <div id="effect-container"></div>
+
+    <div class="content-container">
+        <div class="header-text">
+            <h1>Happy 27th Birthday, Nadhifah Rizky</h1>
+            <p>Buka albumnya sambil dengerin ini yaa...</p>
         </div>
 
-        <!-- Bagian Pemutar Musik -->
+        <!-- Bagian Musik Di Bawah -->
         <div class="music-card">
-            <!-- Nama file lagu disesuaikan dengan screenshot kamu -->
             <audio id="bgMusic" src="Sparkle (Original Version).mp3" loop></audio>
             <button class="btn-play" id="playBtn">▶ PUTAR LAGU</button>
             <p class="status-text" id="status">Klik untuk menemani petualangan 1 tahun kita</p>
@@ -126,25 +169,54 @@
         const music = document.getElementById('bgMusic');
         const playBtn = document.getElementById('playBtn');
         const statusText = document.getElementById('status');
+        const effectContainer = document.getElementById('effect-container');
         let isPlaying = false;
+
+        // Membuat efek balon dan sparkle secara acak
+        function createEffects() {
+            const colors = ['rgba(255,75,110,0.6)', 'rgba(255,182,193,0.6)', 'rgba(255,218,224,0.6)', 'rgba(235,104,165,0.6)'];
+            
+            // Generate Balon
+            for (let i = 0; i < 12; i++) {
+                let balloon = document.createElement('div');
+                balloon.className = 'balloon';
+                balloon.style.left = Math.random() * 90 + '%';
+                balloon.style.animationDelay = Math.random() * 8 + 's';
+                balloon.style.animationDuration = (Math.random() * 4 + 7) + 's';
+                let randomColor = colors[Math.floor(Math.random() * colors.length)];
+                balloon.style.background = randomColor;
+                balloon.style.setProperty('--balloon-color', randomColor);
+                effectContainer.appendChild(balloon);
+            }
+
+            // Generate Sparkle
+            for (let i = 0; i < 25; i++) {
+                let sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = Math.random() * 100 + '%';
+                sparkle.style.top = Math.random() * 70 + '%';
+                sparkle.style.animationDelay = Math.random() * 4 + 's';
+                effectContainer.appendChild(sparkle);
+            }
+        }
+
+        createEffects();
 
         playBtn.addEventListener('click', () => {
             if (!isPlaying) {
                 music.play().then(() => {
                     isPlaying = true;
                     playBtn.innerHTML = '⏸ PAUSE LAGU';
-                    playBtn.style.background = '#718096';
-                    playBtn.style.boxShadow = 'none';
-                    statusText.innerText = '🎵 Lagu sedang berputar... Selamat membaca! ✨';
+                    playBtn.style.background = 'rgba(255,255,255,0.3)';
+                    statusText.innerText = '🎵 Lagu diputar... Selamat membaca album! ✨';
                 }).catch(error => {
-                    alert('Gagal memutar audio. Pastikan file Sparkle (Original Version).mp3 sudah benar.');
+                    alert('Gagal memutar audio. Pastikan file Sparkle sudah benar.');
                 });
             } else {
                 music.pause();
                 isPlaying = false;
                 playBtn.innerHTML = '▶ PUTAR LAGU';
                 playBtn.style.background = '#ff4b6e';
-                playBtn.style.boxShadow = '0 4px 15px rgba(255, 75, 110, 0.4)';
                 statusText.innerText = 'Lagu dihentikan sementara.';
             }
         });
